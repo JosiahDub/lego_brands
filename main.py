@@ -3,7 +3,7 @@ from math import isnan
 import pandas as pd
 import matplotlib.pyplot as plt
 
-from categories import MINIFIGURE_THEMES, BRAND_THEMES, BRAND_MINI_FIGURE_THEMES, THEME_EXCLUDE, LEGO_BRAND_THEMES, \
+from categories import MINIFIGURE_THEMES, BRAND_THEMES, BRAND_MINIFIGURE_THEMES, THEME_EXCLUDE, LEGO_BRAND_THEMES, \
     PARENT_EXCLUDE, SET_BRANDS
 
 rebrickable_url = 'https://rebrickable.com/downloads/'
@@ -29,20 +29,32 @@ def get_parent_theme(x):
         return themes.loc[themes.id == x.parent_id, 'name'].values[0]
 
 
-all_exclude = [
+non_sets = [
     *MINIFIGURE_THEMES,
-    *BRAND_THEMES,
-    *BRAND_MINI_FIGURE_THEMES,
+    *BRAND_MINIFIGURE_THEMES,
     *THEME_EXCLUDE,
-    *LEGO_BRAND_THEMES,
     *PARENT_EXCLUDE,
 ]
 
-sets['parent_theme'] = sets.apply(get_parent_theme, axis=1)
-unbranded = sets.loc[
-    (~sets.theme_name.isin(all_exclude))
-    & (~sets.parent_theme.isin(all_exclude))
-    & (~sets.set_name.str.contains('|'.join(SET_BRANDS)))
+
+all_exclude = [
+    *non_sets,
+    *BRAND_THEMES,
+    *LEGO_BRAND_THEMES,
 ]
-# year_hist = sets.loc[sets.theme_name.str.contains('Star Wars')].hist('year')
+
+sets['parent_theme'] = sets.apply(get_parent_theme, axis=1)
+real_sets = sets.loc[
+    (~sets.theme_name.isin(non_sets))
+    | (~sets.parent_theme.isin(non_sets))
+]
+branded = real_sets.loc[
+    (real_sets.theme_name.isin(BRAND_THEMES))
+    | (real_sets.parent_theme.isin(BRAND_THEMES))
+    | (real_sets.set_name.str.contains('|'.join(SET_BRANDS)))
+]
+year_hist = branded.hist(
+    column='year',
+    bins=len(branded.year.unique()),
+)
 plt.show()
