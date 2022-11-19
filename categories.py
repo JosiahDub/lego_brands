@@ -37,7 +37,7 @@ MINIFIGURE_THEMES = [
     'Collectible Minifigures',
 ]
 
-BRAND_MINI_FIGURE_THEMES = [
+BRAND_MINIFIGURE_THEMES = [
     'The Simpsons Series 1',
     'The Simpsons Series 2',
     'Disney Series 1',
@@ -121,6 +121,7 @@ BRAND_THEMES = [
     'Ben 10',
     'Mixels',
     'Cars',
+    'Sofia the First',
 ]
 
 LEGO_BRAND_THEMES = [
