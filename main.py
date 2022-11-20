@@ -53,11 +53,12 @@ sets['branded'] = sets.real \
     )
 plt.hist(
     [
+        # Smaller dataset followed by larger
         sets.loc[sets.real & sets.branded].year,
         sets.loc[sets.real & ~sets.branded].year,
     ],
     bins=len(sets.year.unique()),
-    stacked=True,
+    histtype='stepfilled',
 )
 years = sets.year.unique()
 round_up = years.min() + (5 - years.min() % 5)
@@ -66,6 +67,13 @@ ticks = [*range(round_up, round_down + 5, 5), years.max()]
 plt.xticks(ticks=ticks, labels=ticks, rotation=70)
 plt.xlabel('Year')
 plt.ylabel('# Sets Released')
-plt.title('Number of branded sets released by year')
-plt.legend(['Branded', 'Unbranded'])
+plt.title('Branded vs unbranded sets released by year')
+plt.legend(
+    [
+        # Swapped from above for some reason...?
+        'Unbranded',
+        'Branded',
+    ],
+    loc='upper left',
+)
 plt.show()
