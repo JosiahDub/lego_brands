@@ -8,6 +8,8 @@ THEME_EXCLUDE = [
     'Tabletop Games and Puzzles',
     'Role Play Toys and Costumes',
     'Books',
+    'Supplemental',  # Debatable
+    'Educational and Dacta',  # Debatable
 ]
 
 MINIFIGURE_THEMES = [
@@ -241,4 +243,11 @@ SET_BRANDS = [
     'Master Wu',
     'Robin',
     'Owen & Blue',
+    'BB-8',
+    'Miles Morales',
+    'The Beatles',
+    'Sith',
+    'The Rolling Stones',
+    'Andy Warhol',
+    'Elvis Presley',
 ]
