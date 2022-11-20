@@ -36,25 +36,36 @@ non_sets = [
     *PARENT_EXCLUDE,
 ]
 
-
-all_exclude = [
-    *non_sets,
+all_brands = [
     *BRAND_THEMES,
     *LEGO_BRAND_THEMES,
 ]
 
 sets['parent_theme'] = sets.apply(get_parent_theme, axis=1)
-real_sets = sets.loc[
-    (~sets.theme_name.isin(non_sets))
-    | (~sets.parent_theme.isin(non_sets))
-]
-branded = real_sets.loc[
-    (real_sets.theme_name.isin(BRAND_THEMES))
-    | (real_sets.parent_theme.isin(BRAND_THEMES))
-    | (real_sets.set_name.str.contains('|'.join(SET_BRANDS)))
-]
-year_hist = branded.hist(
-    column='year',
-    bins=len(branded.year.unique()),
+sets['real'] = (~sets.theme_name.isin(non_sets)) \
+    & (~sets.parent_theme.isin(non_sets)) \
+    & ~sets.set_num.str.contains('[a-zA-Z]')  # Usually non
+sets['branded'] = sets.real \
+    & (
+        (sets.theme_name.isin(BRAND_THEMES))
+        | (sets.parent_theme.isin(BRAND_THEMES))
+        | (sets.set_name.str.contains('|'.join(SET_BRANDS)))
+    )
+plt.hist(
+    [
+        sets.loc[sets.real & sets.branded].year,
+        sets.loc[sets.real & ~sets.branded].year,
+    ],
+    bins=len(sets.year.unique()),
+    stacked=True,
 )
+years = sets.year.unique()
+min_year = years.min()
+round_down = min_year - min_year % 5
+ticks = list(range(round_down, years.max(), 5))
+plt.xticks(ticks=ticks, labels=ticks, rotation=70)
+plt.xlabel('Year')
+plt.ylabel('# Sets Released')
+plt.title('Number of branded sets released by year')
+plt.legend(['Branded', 'Unbranded'])
 plt.show()
