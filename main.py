@@ -4,7 +4,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 from categories import MINIFIGURE_THEMES, BRAND_THEMES, BRAND_MINIFIGURE_THEMES, THEME_EXCLUDE, LEGO_BRAND_THEMES, \
-    PARENT_EXCLUDE, SET_BRANDS
+    PARENT_EXCLUDE, SET_BRANDS, LEGO_SET_BRANDS
 
 rebrickable_url = 'https://rebrickable.com/downloads/'
 
@@ -49,7 +49,7 @@ sets['branded'] = sets.real \
     & (
         sets.theme_name.isin(BRAND_THEMES)
         | sets.parent_theme.isin(BRAND_THEMES)
-        | sets.set_name.str.contains('|'.join(SET_BRANDS))
+        | sets.set_name.str.contains('|'.join([*SET_BRANDS, *LEGO_SET_BRANDS]))
     )
 plt.hist(
     [
