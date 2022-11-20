@@ -181,6 +181,9 @@ SET_BRANDS = [
     'Goofy',
     'Jake Sully',
     'Hagrid',
+    'Batman',
+    'Dom’s',
+    # Cars
     'McLaren',
     'Porsche',
     'Ferrari',
@@ -192,14 +195,13 @@ SET_BRANDS = [
     'Lamborghini',
     'Ducati',
     'Bugatti',
-    'Airbus',
-    'John Deere',
     'Jeep',
     'Mercedes-Benz',
-    'Batman',
-    'Dom’s',
-    'Boeing',
     # 'Mini',  # This is tricky
+    # Industrial
+    'Airbus',
+    'John Deere',
+    'Boeing',
     'Liebherr',
     'CLAAS',
     'Unimog',
@@ -228,11 +230,9 @@ SET_BRANDS = [
     'Demogorgon',
     'Elsa',
     'Olaf',
-    'Wyldstyle',
     'Gru',
     'Rey',
     'Emmet',
-    'Ninjago',
     'Belle Bottom',
     'Woody',
     'Lloyd',
@@ -240,7 +240,6 @@ SET_BRANDS = [
     'Belle',
     'Creeper',
     'Finn',
-    'Master Wu',
     'Robin',
     'Owen & Blue',
     'BB-8',
@@ -250,4 +249,10 @@ SET_BRANDS = [
     'The Rolling Stones',
     'Andy Warhol',
     'Elvis Presley',
+]
+
+LEGO_SET_BRANDS = [
+    'Ninjago',
+    'Wyldstyle',
+    'Master Wu',
 ]
