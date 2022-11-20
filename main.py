@@ -42,14 +42,14 @@ all_brands = [
 ]
 
 sets['parent_theme'] = sets.apply(get_parent_theme, axis=1)
-sets['real'] = (~sets.theme_name.isin(non_sets)) \
-    & (~sets.parent_theme.isin(non_sets)) \
+sets['real'] = ~sets.theme_name.isin(non_sets) \
+    & ~sets.parent_theme.isin(non_sets) \
     & ~sets.set_num.str.contains('[a-zA-Z]')  # Usually non
 sets['branded'] = sets.real \
     & (
-        (sets.theme_name.isin(BRAND_THEMES))
-        | (sets.parent_theme.isin(BRAND_THEMES))
-        | (sets.set_name.str.contains('|'.join(SET_BRANDS)))
+        sets.theme_name.isin(BRAND_THEMES)
+        | sets.parent_theme.isin(BRAND_THEMES)
+        | sets.set_name.str.contains('|'.join(SET_BRANDS))
     )
 plt.hist(
     [
@@ -60,9 +60,9 @@ plt.hist(
     stacked=True,
 )
 years = sets.year.unique()
-min_year = years.min()
-round_down = min_year - min_year % 5
-ticks = list(range(round_down, years.max(), 5))
+round_up = years.min() + (5 - years.min() % 5)
+round_down = years.max() - years.max() % 5
+ticks = [*range(round_up, round_down + 5, 5), years.max()]
 plt.xticks(ticks=ticks, labels=ticks, rotation=70)
 plt.xlabel('Year')
 plt.ylabel('# Sets Released')
