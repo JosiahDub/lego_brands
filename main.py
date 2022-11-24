@@ -51,11 +51,11 @@ sets['branded'] = sets.real \
         | sets.parent_theme.isin(all_brands)
         | sets.set_name.str.contains('|'.join([*SET_BRANDS, *LEGO_SET_BRANDS]))
     )
+sets['unbranded'] = sets.real & ~sets.branded
 plt.hist(
     [
-        # Smaller dataset followed by larger
-        sets.loc[sets.real & sets.branded].year,
-        sets.loc[sets.real & ~sets.branded].year,
+        sets.loc[sets.branded].year,
+        sets.loc[sets.unbranded].year,
     ],
     bins=list(range(sets.year.min(), sets.year.max() + 1)),
     stacked=True,
@@ -75,4 +75,9 @@ plt.title('Branded vs unbranded sets released by year')
 plt.legend(
     loc='upper left',
 )
+ratio = sets.groupby('year').agg(
+    num_branded=pd.NamedAgg('branded', 'sum'),
+    num_unbranded=pd.NamedAgg('unbranded', 'sum'),
+)
+ratio['ratio'] = (ratio.num_branded / (ratio.num_unbranded + ratio.num_branded)).fillna(0.0)
 plt.show()
