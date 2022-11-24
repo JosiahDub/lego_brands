@@ -124,6 +124,7 @@ BRAND_THEMES = [
     'Mixels',
     'Cars',
     'Sofia the First',
+    'Galidor',
 ]
 
 LEGO_BRAND_THEMES = [
@@ -249,6 +250,7 @@ SET_BRANDS = [
     'The Rolling Stones',
     'Andy Warhol',
     'Elvis Presley',
+    'Horizon Forbidden West',
 ]
 
 LEGO_SET_BRANDS = [
