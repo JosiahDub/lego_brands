@@ -52,7 +52,11 @@ sets['branded'] = sets.real \
         | sets.set_name.str.contains('|'.join([*SET_BRANDS, *LEGO_SET_BRANDS]))
     )
 sets['unbranded'] = sets.real & ~sets.branded
-plt.hist(
+fig, ax = plt.subplots(constrained_layout=True)
+hist_plot = ax.twinx()
+ratio_plot = ax.twinx()
+ratio_plot.set_ylim(0, 0.75)
+hist_plot.hist(
     [
         sets.loc[sets.branded].year,
         sets.loc[sets.unbranded].year,
@@ -64,20 +68,24 @@ plt.hist(
         'Unbranded',
     ]
 )
+ax.set_ylim(0, 700)
 years = sets.year.unique()
 round_up = years.min() + (5 - years.min() % 5)
 round_down = years.max() - years.max() % 5
 ticks = [*range(round_up, round_down + 5, 5), years.max()]
-plt.xticks(ticks=ticks, labels=ticks, rotation=70)
-plt.xlabel('Year')
-plt.ylabel('# Sets Released')
-plt.title('Branded vs unbranded sets released by year')
-plt.legend(
+ax.set_xticks(ticks=ticks, labels=ticks, rotation=70)
+hist_plot.set_yticks([])
+ax.set_xlabel('Year')
+ax.set_ylabel('# Sets Released')
+ax.set_title('Branded vs unbranded sets released by year')
+hist_plot.legend(
     loc='upper left',
 )
-ratio = sets.groupby('year').agg(
+ratio_df = sets.groupby('year').agg(
     num_branded=pd.NamedAgg('branded', 'sum'),
     num_unbranded=pd.NamedAgg('unbranded', 'sum'),
 )
-ratio['ratio'] = (ratio.num_branded / (ratio.num_unbranded + ratio.num_branded)).fillna(0.0)
+ratio_df['ratio'] = (ratio_df.num_branded / (ratio_df.num_unbranded + ratio_df.num_branded)).fillna(0.0)
+ratio_plot.plot(ratio_df.ratio, label='Ratio')
+ratio_plot.set_ylabel('Ratio of branded to # sets')
 plt.show()
