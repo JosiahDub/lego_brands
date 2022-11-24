@@ -10,6 +10,7 @@ THEME_EXCLUDE = [
     'Books',
     'Supplemental',  # Debatable
     'Educational and Dacta',  # Debatable
+    'Powered Up'  # Technic motors and such
 ]
 
 MINIFIGURE_THEMES = [
@@ -198,6 +199,9 @@ SET_BRANDS = [
     'Bugatti',
     'Jeep',
     'Mercedes-Benz',
+    'Volkswagen',
+    'Caterham',
+    'DeLorean',
     # 'Mini',  # This is tricky
     # Industrial
     'Airbus',
@@ -220,7 +224,6 @@ SET_BRANDS = [
     'Mickey Mouse',
     'Minnie Mouse',
     'Boba Fett',
-    'Homer Simpson',
     'Krusty the Clown',
     'Jack Skellington',
     'Aquaman',
@@ -251,6 +254,27 @@ SET_BRANDS = [
     'Andy Warhol',
     'Elvis Presley',
     'Horizon Forbidden West',
+    'Queer Eye',
+    'adidas',
+    'Friends - The Apartments',
+    'Seinfeld',
+    'Fender',
+    'Home Alone',
+    'Winnie the Pooh',
+    'Sesame Street',
+    'Flintstones',
+    'Steamboat Willie',
+    'Central Perk',
+    'TRON',
+    'Voltron',
+    'Adventure Time',
+    'The Big Bang Theory',
+    'WALL•E',
+    'Doctor Who',
+    'Ghostbusters',
+    'Micro World',
+    'Simpson',
+    'Kwik-E-Mart',
 ]
 
 LEGO_SET_BRANDS = [
