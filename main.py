@@ -47,8 +47,8 @@ sets['real'] = ~sets.theme_name.isin(non_sets) \
     & ~sets.set_num.str.contains('[a-zA-Z]')  # Usually non
 sets['branded'] = sets.real \
     & (
-        sets.theme_name.isin(BRAND_THEMES)
-        | sets.parent_theme.isin(BRAND_THEMES)
+        sets.theme_name.isin(all_brands)
+        | sets.parent_theme.isin(all_brands)
         | sets.set_name.str.contains('|'.join([*SET_BRANDS, *LEGO_SET_BRANDS]))
     )
 plt.hist(
@@ -57,8 +57,12 @@ plt.hist(
         sets.loc[sets.real & sets.branded].year,
         sets.loc[sets.real & ~sets.branded].year,
     ],
-    bins=len(sets.year.unique()),
-    histtype='stepfilled',
+    bins=list(range(sets.year.min(), sets.year.max() + 1)),
+    stacked=True,
+    label=[
+        'Branded',
+        'Unbranded',
+    ]
 )
 years = sets.year.unique()
 round_up = years.min() + (5 - years.min() % 5)
@@ -69,11 +73,6 @@ plt.xlabel('Year')
 plt.ylabel('# Sets Released')
 plt.title('Branded vs unbranded sets released by year')
 plt.legend(
-    [
-        # Swapped from above for some reason...?
-        'Unbranded',
-        'Branded',
-    ],
     loc='upper left',
 )
 plt.show()
